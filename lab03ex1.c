@@ -7,7 +7,7 @@ int main(){
     scanf("%d", & length);
 
     printf("  ^YY\n");
-    printf(" {OO >\n");
+    printf(" {oo >\n");
     printf("(\"\"  |\n");
 
     for (int i = 1; i <= length; i++){
