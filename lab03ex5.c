@@ -15,25 +15,13 @@ int main(){
 
 
     // find the maximum digit and initialize guess with the digit
-    if (hundred >= ten){
+    if ( (hundred >= ten) && (hundred >= single) )
+        guess = hundred;
 
-        if (hundred >= single)
-            guess = hundred;
-        else guess = single;
+    else if ( (single >= hundred) && (single >= ten) )
+        guess = single;
 
-    } else if (single >= hundred){
-
-        if (single >= ten)
-            guess = single;
-        else guess = ten;
-
-    } else{
-        
-        if (ten >= single)
-            guess = ten;
-        else guess = single;
-        
-    }
+    else guess = ten;
     
     
 
