@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <math.h>
 
 int main(){
     
@@ -13,7 +13,7 @@ int main(){
     green = green / 255;
     blue = blue / 255;
 
-
+    
 
     // Determine max (value) and min
     if ( (red >= green) && (red >= blue) ){
@@ -39,7 +39,6 @@ int main(){
 
     }
 
-
     // calculate saturation
     if (value <= 1e-6)
         sat = 0;
@@ -51,12 +50,15 @@ int main(){
         hue = 0;
     else{
 
-        if ( abs(value - red) <= 1e-6 )
+        if ( fabs(value - red) <= 1e-6 )
             hue = (green - blue) / (value - min);
-        else if ( abs(value - green) <= 1e-6 )
+        
+        else if ( fabs(value - green) <= 1e-6 )
             hue = (blue - red) / (value - min) + 2;
+        
         else
             hue = (red - green) / (value - min) + 4;
+            
 
     }
 
