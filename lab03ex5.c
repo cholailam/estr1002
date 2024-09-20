@@ -27,25 +27,34 @@ int main(){
             guess = single;
         else guess = ten;
 
-    } else guess = ten;
+    } else{
+        
+        if (ten >= single)
+            guess = ten;
+        else guess = single;
+        
+    }
     
     
 
 
     // guess the number system
     convert = guess * guess * hundred + guess * ten + single;
-    while (convert <= scientist && (hundred != 0 || ten != 0)){
+    while (convert <= scientist && (hundred != 0 || ten != 0) && (scientist != alien)){
 
         if (convert == scientist){
-            printf("%d", guess);
+            printf("%d\n", guess);
             break;
         } 
         guess += 1;
         convert = guess * guess * hundred + guess * ten + single;
     }
 
-    if (convert != scientist)
-        printf("CHEATED");
+    if (scientist == alien)
+        printf("10\n");
+    else if (convert != scientist)
+        printf("CHEATED\n");
+
     
     return 0;
 }
