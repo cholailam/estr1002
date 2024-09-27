@@ -40,18 +40,18 @@ int main(){
 
         }
 
-        // consider mai next move
+        
 
         // move ourselves
         
-        if (x_diff >= y_diff && x_diff != 0){
+        if ( (x_diff >= y_diff && x_diff != 0) && !(x_diff == 1 && next == 2) && !(x_diff == -1 && next == 1) ){
             
             if (x_diff > 0)
                 x_diff -= 1;
             else if (x_diff < 0)
                 x_diff += 1;
             
-        } else if (y_diff != 0) {
+        } else if ( (y_diff != 0) && !(y_diff == 1 && next == 3) && !(y_diff == -1 && next == 4) ){
 
             if (y_diff > 0)
                 y_diff -= 1;
