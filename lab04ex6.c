@@ -3,10 +3,11 @@
 
 int main(){
     
-    int x_diff, y_diff, spend, move_iron, min = 0, i;
+    int x_diff, y_diff, spend, move_iron, min = 0, i, next;
 
     scanf("%d %d", & x_diff, & y_diff);
     scanf("%d", & spend);
+    scanf(" %d", & move_iron);
     
     
     for (i = 1; i <= spend; i++){
@@ -16,7 +17,8 @@ int main(){
 
        
         min += 1;
-        scanf(" %d", & move_iron);
+        if (i != spend)
+            scanf(" %d", & next);
 
 
 
@@ -38,8 +40,11 @@ int main(){
 
         }
 
+        // consider mai next move
+
         // move ourselves
-        if (x_diff > y_diff && x_diff != 0){
+        
+        if (x_diff >= y_diff && x_diff != 0){
             
             if (x_diff > 0)
                 x_diff -= 1;
@@ -56,11 +61,15 @@ int main(){
         }
 
 
+        move_iron = next;
+
     }
     
-    if (i-1 == spend && x_diff != 0 && y_diff != 0)
+    if (i-1 == spend && x_diff != 0 || y_diff != 0)
         printf("impossible\n");
     else printf("%d\n", min);
+
+
 
     return 0;
 
