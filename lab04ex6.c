@@ -54,7 +54,7 @@ int main(){
         if ( abs(x_diff) == abs(y_diff) ){
 
             //printf("zero: %d\n", next);
-            if (next == 1 || next == 2){
+            if ( (next == 1 && y_diff > 0) || (next == 2 && y_diff < 0) || (next == 3 && y_diff < 0) || (next == 4 && y_diff > 0) ){
                 
                 if (y_diff > 0)
                     y_diff -= 1;
