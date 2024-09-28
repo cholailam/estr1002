@@ -47,7 +47,7 @@ int main(){
             break;
 
         
-        printf("%d  iron: %d, %d\n", i, x_diff, y_diff);
+        //printf("%d  iron: %d, %d\n", i, x_diff, y_diff);
 
         // move ourselves
         
@@ -86,7 +86,7 @@ int main(){
 
         } 
 
-        printf("%d    me: %d, %d\n\n", i, x_diff, y_diff);
+        //printf("%d    me: %d, %d\n\n", i, x_diff, y_diff);
 
         move_iron = next;
 
@@ -94,7 +94,7 @@ int main(){
             break;
     }
     
-    if (i-1 == spend && x_diff != 0 || y_diff != 0)
+    if (i-1 == spend && (x_diff != 0 || y_diff != 0 ))
         printf("impossible\n");
     else printf("%d\n", min);
 
