@@ -31,32 +31,37 @@ int main(){
     
     
     // loop for checking each number between the given range
-    for (int current = smallest; current <= largest ; current++){
+    for (int current = smallest; current <= largest; current++){
         
-        printf("current: %d\n", current);
+        if (find_divisor[current] == 0){
+            
+            
+        
+        //printf("current: %d\n", current);
         //copy another array from find_divisor
-        for (int copy = 2; copy <= current-1; copy++)
+        max_possible = current/2 + 1;
+        for (int copy = 2; copy <= max_possible; copy++)
             current_find[copy] = find_divisor[copy];
         
         
-        max_possible = (int) (sqrt(current)+0.5);
+        
         // gather all prime factor of current number
         for (int k = 2; k <= max_possible; k++){
 
-            if (current % k != 0){
+            if (current % k != 0 && current_find[k] == 1){
                 
-                for (int b = k * 2; b <= current-1; b += k)
+                for (int b = k; b <= current-1; b += k)
                     current_find[b] = 0;
             }
 
         }
         
-        for (int c = 2; c <= current-1; c++){
+        for (int c = 2; c <= max_possible; c++){
             
             if (current_find[c] == 1){
                 
                 count += 1;
-                printf("prime factor: %d\n", c);
+                //printf("prime factor: %d\n", c);
                 all_divisor[count] = c;
                 
             }
@@ -116,6 +121,8 @@ int main(){
 
         //printf("\n");
         count = -1;
+        
+        }
     }
 
     printf("%d\n", sum);
