@@ -6,15 +6,15 @@
 int main(){
 
     int smallest, largest, max_possible, count = -1, happy_num, happy = 1, sum = 0, flag; 
-    char find_divisor[3000001];
+    char find_divisor[3000001], current_find[3000001];
     int all_divisor[1734];
 
     scanf("%d %d", & smallest, & largest);
     
 
-    
+    // find all prime factors in given range
     memset(find_divisor, 1, 3000001);
-    max_possible = 3000001; //(int) (sqrt(current)+0.5);
+    max_possible = 3000001;//(int) (sqrt(3000001)+0.5);
 
         
     for (int check_divisor = 2; check_divisor <= max_possible; check_divisor++){
@@ -33,17 +33,33 @@ int main(){
     // loop for checking each number between the given range
     for (int current = smallest; current <= largest ; current++){
         
+        printf("current: %d\n", current);
+        //copy another array from find_divisor
+        for (int copy = 2; copy <= current-1; copy++)
+            current_find[copy] = find_divisor[copy];
         
+        
+        max_possible = (int) (sqrt(current)+0.5);
+        // gather all prime factor of current number
+        for (int k = 2; k <= max_possible; k++){
 
-        // gather all factor of current number
-        for (int k = 2; k <= current-1; k++){
-
-            if (find_divisor[k] == 1 && current % k == 0){
-                count += 1;
-                //printf("%d\n", k);
-                all_divisor[count] = k;
+            if (current % k != 0){
+                
+                for (int b = k * 2; b <= current-1; b += k)
+                    current_find[b] = 0;
             }
 
+        }
+        
+        for (int c = 2; c <= current-1; c++){
+            
+            if (current_find[c] == 1){
+                
+                count += 1;
+                printf("prime factor: %d\n", c);
+                all_divisor[count] = c;
+                
+            }
         }
         
         //find if the current number has any happy divisor
