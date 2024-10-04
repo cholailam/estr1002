@@ -20,17 +20,19 @@ int main(){
         printf("current: %d\n", current);
 
 
-        // find all divisor of the current number
+        // find all prime number inside the range
         memset(find_divisor, 1, 3000001);
         max_possible = (int) (sqrt(current)+0.5);
 
-        //printf("Max_possible: %d\n", max_possible);
+        printf("Max_possible: %d\n", max_possible);
         for (int check_divisor = 2; check_divisor <= max_possible; check_divisor++){
 
             //printf("Check divisor ing: %d\n", check_divisor);
-            if (current % check_divisor == 0 && find_divisor[check_divisor] == 1){
+            
+            if (find_divisor[check_divisor] == 1){
                 
                 //Sieve
+                printf("Sieve: %d\n", check_divisor);
                 for (int j = check_divisor * 2; j <= current; j += check_divisor)
                     find_divisor[j] = 0;
            
@@ -40,7 +42,7 @@ int main(){
         }
         
 
-        // gather all prime factor of current number
+        // gather all factor of current number
         for (int k = 2; k <= current; k++){
 
             if (find_divisor[k] == 1){
@@ -50,7 +52,7 @@ int main(){
             }
 
         }
-
+        /*
         //find if the current number has any happy divisor
         //printf("count: %d\n", count);
         if (count > 1){
@@ -64,7 +66,7 @@ int main(){
                 for (happy = check_happy + 1; happy <= count; happy++){
 
                     //printf("%d compare: %d\n", happy, all_divisor[happy]);
-                    if (happy_num % all_divisor[happy] != 0);
+                    if (happy_num % all_divisor[happy] != 0){
                         break;
                     }
                     
@@ -77,7 +79,7 @@ int main(){
                 }
                  
             
-            
+            }
 
         } else if (count == 0){
             sum += 1;
@@ -91,7 +93,7 @@ int main(){
             }
         }
 
-
+        */
 
         printf("\n");
         count = -1;
