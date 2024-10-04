@@ -24,26 +24,32 @@ int main(){
         memset(find_divisor, 1, 3000001);
         max_possible = (int) (sqrt(current)+0.5);
 
-        printf("Max_possible: %d\n", max_possible);
+        
         for (int check_divisor = 2; check_divisor <= max_possible; check_divisor++){
 
-            //printf("Check divisor ing: %d\n", check_divisor);
             
             if (find_divisor[check_divisor] == 1){
                 
                 //Sieve
-                printf("Sieve: %d\n", check_divisor);
                 for (int j = check_divisor * 2; j <= current; j += check_divisor)
                     find_divisor[j] = 0;
            
             }
+            
+            
 
 
         }
         
+        // check if the prime number is the divisor of the current number
+        for (int i = 2; i <= current; i++){
+            
+            if (current % i != 0)
+                find_divisor[i] = 0;
+        }
 
         // gather all factor of current number
-        for (int k = 2; k <= current; k++){
+        for (int k = 2; k <= current-1; k++){
 
             if (find_divisor[k] == 1){
                 count += 1;
@@ -52,9 +58,8 @@ int main(){
             }
 
         }
-        /*
+        
         //find if the current number has any happy divisor
-        //printf("count: %d\n", count);
         if (count > 1){
             
             for (int check_happy = 0; check_happy <= count; check_happy++){
@@ -93,7 +98,7 @@ int main(){
             }
         }
 
-        */
+        
 
         printf("\n");
         count = -1;
