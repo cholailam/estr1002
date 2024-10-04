@@ -13,47 +13,32 @@ int main(){
     
 
     
+    memset(find_divisor, 1, 3000001);
+    max_possible = 3000001; //(int) (sqrt(current)+0.5);
+
+        
+    for (int check_divisor = 2; check_divisor <= max_possible; check_divisor++){
+
+        if (find_divisor[check_divisor] == 1){
+                
+            //Sieve
+            for (int j = check_divisor * 2; j <= max_possible; j += check_divisor)
+                find_divisor[j] = 0;
+       
+        }
+        
+    }
     
     
     // loop for checking each number between the given range
     for (int current = smallest; current <= largest ; current++){
         
         
-        //printf("current: %d\n", current);
-
-
-        // find all prime number inside the range
-        memset(find_divisor, 1, 3000001);
-        max_possible = (int) (sqrt(current)+0.5);
-
-        
-        for (int check_divisor = 2; check_divisor <= max_possible; check_divisor++){
-
-            
-            if (find_divisor[check_divisor] == 1){
-                
-                //Sieve
-                for (int j = check_divisor * 2; j <= current; j += check_divisor)
-                    find_divisor[j] = 0;
-           
-            }
-            
-            
-
-
-        }
-        
-        // check if the prime number is the divisor of the current number
-        for (int i = 2; i <= current; i++){
-            
-            if (current % i != 0)
-                find_divisor[i] = 0;
-        }
 
         // gather all factor of current number
         for (int k = 2; k <= current-1; k++){
 
-            if (find_divisor[k] == 1){
+            if (find_divisor[k] == 1 && current % k == 0){
                 count += 1;
                 //printf("%d\n", k);
                 all_divisor[count] = k;
@@ -72,7 +57,7 @@ int main(){
                 
                 // happy_num: the number checking if it is the happy divisor
                 happy_num = current / all_divisor[check_happy];
-                printf("Suspected happy divisor: %d\n", happy_num);
+                //printf("Suspected happy divisor: %d\n", happy_num);
                 
                 
                 
