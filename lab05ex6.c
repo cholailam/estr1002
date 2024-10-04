@@ -5,7 +5,7 @@
 
 int main(){
 
-    int smallest, largest, max_possible, count = -1, happy_num, happy = 1, sum = 0; 
+    int smallest, largest, max_possible, count = -1, happy_num, happy = 1, sum = 0, flag; 
     char find_divisor[3000001];
     int all_divisor[1734];
 
@@ -13,11 +13,13 @@ int main(){
     
 
     
+    
+    
     // loop for checking each number between the given range
     for (int current = smallest; current <= largest ; current++){
         
         
-        printf("current: %d\n", current);
+        //printf("current: %d\n", current);
 
 
         // find all prime number inside the range
@@ -53,7 +55,7 @@ int main(){
 
             if (find_divisor[k] == 1){
                 count += 1;
-                printf("%d\n", k);
+                //printf("%d\n", k);
                 all_divisor[count] = k;
             }
 
@@ -63,23 +65,34 @@ int main(){
         if (count > 1){
             
             for (int check_happy = 0; check_happy <= count; check_happy++){
+                // check_happy: index refering to prime factors, helps generate happy_num
+                
+                
+                
+                
+                // happy_num: the number checking if it is the happy divisor
+                happy_num = current / all_divisor[check_happy];
+                printf("Suspected happy divisor: %d\n", happy_num);
+                
+                
                 
                 
                 // check if the number is divisable for all prime divisor
-                happy_num = current / all_divisor[check_happy];
-                //printf("check happy: %d\n", happy_num);
-                for (happy = check_happy + 1; happy <= count; happy++){
+                for (happy = 0; happy <= count; happy++){
 
+                    flag = 1;
                     //printf("%d compare: %d\n", happy, all_divisor[happy]);
                     if (happy_num % all_divisor[happy] != 0){
+                        //printf("%d is not divisable by %d\n\n", happy_num, all_divisor[happy]);
+                        flag = 0;
                         break;
                     }
                     
                 }
-                printf("happy: %d\n", happy);
-                if (happy-1 == count){
+                //printf("happy: %d\n", happy);
+                if (flag){
                     sum += 1;
-                    printf("happy %d\n", current);
+                    //printf("happy %d\n", current);
                     break;
                 }
                  
@@ -88,19 +101,19 @@ int main(){
 
         } else if (count == 0){
             sum += 1;
-            printf("happy 0\n");
+            //printf("happy 0\n");
 
         } else if (count == 1){
 
             if (all_divisor[0] * all_divisor[1] != current){
                 sum += 1;
-                printf("happy 1\n");
+                //printf("happy 1\n");
             }
         }
 
         
 
-        printf("\n");
+        //printf("\n");
         count = -1;
     }
 
