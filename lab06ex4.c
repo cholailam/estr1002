@@ -3,7 +3,7 @@
 
 int main(){
 
-    int move, i = 0, start = -1, j = 0;
+    int move, i = 0, start = -1, j = 0, count_vowel = 0, start_move = 0;
     char word[205], non_vowel[205], all_vowel[205];
 
     scanf("%s", word);
@@ -18,9 +18,7 @@ int main(){
             word[i] == 'A' || word[i] == 'E' || word[i] == 'I' || word[i] == 'O' || word[i] == 'U'){
 
 
-            // determine where is the first vowel 
-            if (start == -1)
-                start = i;
+            count_vowel += 1;
 
             //printf("Vowel: [%c]\n", word[i]);
             all_vowel[i] = word[i];
@@ -47,18 +45,65 @@ int main(){
 
 
 
-    start = start + move + i - 1;
+    // determine where is the first vowel to be printed out
+    if (count_vowel > 0)
+        move = move % count_vowel;
+    if (move > 0)
+
+        for (int k = 0; k <= i; k++){
+
+            if (all_vowel[k] != '0')
+                move -= 1;
+
+            if (move == -1){
+                start = k;
+                break;
+            }
+            
+        }
+    else if (move < 0){
+
+        for (int k = i; k >= 0; k--){
+
+            if (all_vowel[k] != '0')
+                move += 1;
+
+            if (move == 0){
+                start = k;
+                break;
+            }
+            
+        }
+    } else 
+        printf("%s", word);
+
+    //printf("i: %d\n", i);
+
+    //printf("start: %d\n", start);
+    
     // Print out the characters
-    while (j <= i){
+    while (j <= i && start != -1){
 
-        if (non_vowel[j] != '\0')
+        //printf("non: [%c]\n", non_vowel[j]);
+        //printf("vow: [%c]\n", all_vowel[start]);
+
+
+        if (non_vowel[j] != '0')
             printf("%c", non_vowel[j]);
-        else {
+        
+        else{
+            printf("%c", all_vowel[start]);
 
-
-
+            // move the start to the next vowel
+            start = (start + 1) % (i + 1);
+            while (all_vowel[start] == '0')
+                start = (start + 1) % (i + 1);
+            
         }
         j += 1;
+
+
+        
     }
 
 
