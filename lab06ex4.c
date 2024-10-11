@@ -48,6 +48,7 @@ int main(){
     // determine where is the first vowel to be printed out
     if (count_vowel > 0)
         move = move % count_vowel;
+    else move = 0;
     if (move > 0)
 
         for (int k = 0; k <= i; k++){
