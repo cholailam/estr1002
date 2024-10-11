@@ -8,7 +8,7 @@ int main(){
 
     scanf("%s", word);
 
-    convert[0] = '0';
+    //convert[0] = '0';
     // assigning a value to each character 
     // count number of digit at the same time
     while (word[digit] != '\0'){
@@ -54,8 +54,9 @@ int main(){
     }
 
     // add 1 to repre so repre can show the smallest possible base
-    repre += 1;
-    //printf("repre: %d, digit: %d", repre, digit);
+    if (repre == 1)
+        repre += 1;
+    printf("repre: %d, digit: %d\n", repre, digit);
 
     // calculate the time before war
     for (int j = 0; j < digit; j++){
@@ -64,8 +65,8 @@ int main(){
         for (int k = 0; k < repre; k++){
 
             if (word[j] == convert[k]){
-                //printf("%d * %d^%d\n", k, repre-1, digit - j - 1);
-                second += k * pow(repre-1, digit - j - 1);
+                printf("%d * %d^%d\n", k, repre, digit - j - 1);
+                second += k * pow(repre, digit - j - 1);
                 break;
             }
 
