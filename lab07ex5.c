@@ -15,19 +15,29 @@ int cal_score(int start, int end, char line[100005]){
 }
 
 
-int find_pos(int start, char line[100005], int avg_score, int avg_pos, int length){
+int find_pos(int start, char line[100005], int avg_score, int avg_pos, int length, int remain_part){
 
     int min_diff, current_diff, best_pos, current_pos, previous_diff = 26 * 100001;
     
 
     // initialize 
-    min_diff = previous_diff;
-    current_diff = cal_score(start, avg_pos, line) - avg_score;    
-    best_pos = current_pos = avg_pos;
+
+
+    best_pos = current_pos = start + avg_pos + 1;
+    if (current_pos >= length){
+        best_pos -= 1;
+        current_pos -= 1;
+    }
     //printf("Avg pos: %d\n", avg_pos);
 
+    
+    min_diff = previous_diff;
+    current_diff = cal_score(start, current_diff, line) - avg_score; 
+
+
+
     while (previous_diff != current_diff && abs(min_diff) > abs(current_diff) ){
-        //printf("Current_diff of pos %d: %d\n", current_pos, current_diff);
+        //printf("Part [%d] Current_diff of pos %d: %d\n", remain_part, current_pos, current_diff);
 
         // check if current_diff is smaller than min_diff, so it is the better position
         if ( abs(min_diff) > abs(current_diff) ){
@@ -40,21 +50,21 @@ int find_pos(int start, char line[100005], int avg_score, int avg_pos, int lengt
         if (current_diff == 0)
             return current_pos;
         
-        else if (current_diff < 0 && current_pos < length) // = calculated score is smaller than avg_score
+        else if (current_diff < 0 && (current_pos + remain_part) <= length) // = calculated score is smaller than avg_score
             // can try try more letter
             current_pos += 1;           
 
 
-        else if (current_diff > 0 && current_pos != start)
+        else if (current_diff > 0 && current_pos - 1 > start)
             // try fewer letter
             current_pos -= 1;       
         
         previous_diff = current_diff;
         current_diff = cal_score(start, current_pos, line) - avg_score;
 
-            
+        //printf("Part [%d] Current_diff of pos %d: %d\n\n", remain_part, current_pos, current_diff);    
     }
-
+    //printf("Best pos: %d\n", best_pos);
     return best_pos;    
 
 }
@@ -90,7 +100,7 @@ int main(){
     part_pos[num_pos] = 0;
     while (num_pos + 1 < partition){
         num_pos += 1;
-        part_pos[num_pos] = find_pos(start_pos, line, avg_score, avg_pos, length);
+        part_pos[num_pos] = find_pos(start_pos, line, avg_score +1, avg_pos, length, partition - num_pos);
         start_pos = part_pos[num_pos];    
     }
     part_pos[num_pos+1] = length+1;
@@ -99,12 +109,12 @@ int main(){
 
 
     //for (int k = 0; k <= num_pos; k++)
-    //    printf("=> %d\n", part_pos[k]);
+      //  printf("=> %d\n", part_pos[k]);
 
 
 
 
-
+    // find maximum score among partitioned word
     max_score = cal_score(part_pos[0], part_pos[1], line);
     for (int j = 1; j < partition; j++){
 
