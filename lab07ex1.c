@@ -23,12 +23,13 @@ unsigned long long cal_large_pow(int x, int y){
 
 int main(){
 
-    int digit[21], index = 0, estr = 0;
-    unsigned long long num, ans, check = 0, degree = 0, before = -1;
+    int digit[21], index = 0, estr = 0, flag = 1;
+    unsigned long long num, ans, degree = 0, before = 0, check = 1, value;
 
     scanf("%llu", & num);
     ans = num;
 
+    //printf("%llu\n", num);
     // Convert num to digits and append the digits in the array digit
     for (int i = 20; i >= 0; i--){
 
@@ -46,23 +47,32 @@ int main(){
     } 
 
 
-    //printf("index: %d\n", index);
+    // printf("index: %d\n", index);
     // check power 1 by 1 to see if it is an estr number
-    while (check < ans && before != check){
+
+    
+    while (check > 0 && before != check){
         
         before = check;
-        check = 0;
+        check = ans;
         
         estr += 1;
         // calculate sum of digit ^ estr;
-        for (int j = 0; j <= index-1; j++)
-            check += cal_large_pow(digit[j], estr);
+        for (int j = 0; j <= index-1; j++){
+
+            value = cal_large_pow(digit[j], estr);
+            if (check >= value)
+                check -= value;
+            else flag = 0;
+
+        }
             
-         
+        if (!flag)
+            break; 
         //printf("check %d: %llu\n", estr, check);        
     }
     
-    if (check == ans)
+    if (check == 0)
         printf("%d", estr);
     else printf("no");
 
