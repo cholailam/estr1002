@@ -93,15 +93,24 @@ int main(){
         part_pos[num_pos] = find_pos(start_pos, line, avg_score, avg_pos, length);
         start_pos = part_pos[num_pos];    
     }
-    part_pos[num_pos] = length;
+    part_pos[num_pos+1] = length+1;
+
+
+
 
     //for (int k = 0; k <= num_pos; k++)
     //    printf("=> %d\n", part_pos[k]);
 
-    
-    for (int j = 0; j < partition; j++){
 
+
+
+
+    max_score = cal_score(part_pos[0], part_pos[1], line);
+    for (int j = 1; j < partition; j++){
+
+        //printf("current pos: %d\n", part_pos[j]);
         check_score = cal_score(part_pos[j], part_pos[j+1], line);
+        //printf("check_score: %d\n", check_score);
         if (max_score < check_score)
             max_score = check_score;
 
