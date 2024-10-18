@@ -3,29 +3,11 @@
 #include <string.h>
 #include <stdlib.h>
 
-int binary_search(int target, int ordered_tm[10005], int size){
-
-    int left = 0, right = size - 1, middle;
-
-    while (left <= right){
-
-        middle = (left + right) / 2;
-        
-        if (ordered_tm[middle] == target)
-            return 1;
-        else if (ordered_tm[middle] > target)
-            right = middle - 1;
-        else
-            left = middle + 1;
-
-    }
-    return 0;
-}
-
+// cslculste the total of index from start to end (without end) in line
 int cal_score(int start, int end, char line[100005]){
 
     int score = 0;
-    for (int i = start; i <= end; i++){
+    for (int i = start; i < end; i++){
         score += line[i] - 'a' + 1;
     }
     return score;
@@ -33,16 +15,21 @@ int cal_score(int start, int end, char line[100005]){
 }
 
 
-int find_pos(int start, char line[100005], int avg_score, int avg_pos){
+int find_pos(int start, char line[100005], int avg_score, int avg_pos, int length){
 
-    int min_diff, current_diff, best_pos, current_pos;
+    int min_diff, current_diff, best_pos, current_pos, previous_diff = 26 * 100001;
     
-    min_diff = current_diff = cal_score(start, avg_pos, line) - avg_score;    
+
+    // initialize 
+    min_diff = previous_diff;
+    current_diff = cal_score(start, avg_pos, line) - avg_score;    
     best_pos = current_pos = avg_pos;
+    //printf("Avg pos: %d\n", avg_pos);
 
+    while (previous_diff != current_diff && abs(min_diff) > abs(current_diff) ){
+        //printf("Current_diff of pos %d: %d\n", current_pos, current_diff);
 
-    while ( abs(min_diff) >= abs(current_diff) ){
-
+        // check if current_diff is smaller than min_diff, so it is the better position
         if ( abs(min_diff) > abs(current_diff) ){
             best_pos = current_pos;
             min_diff = current_diff;
@@ -53,14 +40,16 @@ int find_pos(int start, char line[100005], int avg_score, int avg_pos){
         if (current_diff == 0)
             return current_pos;
         
-        else if (current_diff < 0) // = calculated score is smaller than avg_score
+        else if (current_diff < 0 && current_pos < length) // = calculated score is smaller than avg_score
             // can try try more letter
             current_pos += 1;           
 
-        else 
+
+        else if (current_diff > 0 && current_pos != start)
+            // try fewer letter
             current_pos -= 1;       
         
-
+        previous_diff = current_diff;
         current_diff = cal_score(start, current_pos, line) - avg_score;
 
             
@@ -75,8 +64,10 @@ int find_pos(int start, char line[100005], int avg_score, int avg_pos){
 int main(){
 
     char line[100005];
-    int partition, total_score, length = 0, avg_score, avg_pos, part_pos[100005];
-    //part_pos: stores the index of 1st letter in each partition
+    int partition, total_score, length = 0, avg_score, avg_pos, part_pos[100005], num_pos = 0, start_pos = 0, max_score = 0, check_score;
+    // part_pos: stores the index of 1st letter in each partition
+    // num_pos: index of 1st position assigned in part_pos
+    // start_pos: starting position of each partition
 
     scanf("%s", line);
     scanf("%d", & partition);
@@ -87,14 +78,35 @@ int main(){
     length -= 1;
 
 
-    total_score = cal_score(0, length, line);
-    printf("Total: %d\n", total_score);
+    total_score = cal_score(0, length+1, line);
+    //printf("Total: %d\n", total_score);
 
     avg_score = total_score / partition;
     avg_pos = (length + 1) / partition; 
 
-    part_pos[0] = 0;
-    while 
+
+
+
+    part_pos[num_pos] = 0;
+    while (num_pos + 1 < partition){
+        num_pos += 1;
+        part_pos[num_pos] = find_pos(start_pos, line, avg_score, avg_pos, length);
+        start_pos = part_pos[num_pos];    
+    }
+    part_pos[num_pos] = length;
+
+    //for (int k = 0; k <= num_pos; k++)
+    //    printf("=> %d\n", part_pos[k]);
+
+    
+    for (int j = 0; j < partition; j++){
+
+        check_score = cal_score(part_pos[j], part_pos[j+1], line);
+        if (max_score < check_score)
+            max_score = check_score;
+
+    }
+    printf("%d\n", max_score);
 
     return 0;
 
