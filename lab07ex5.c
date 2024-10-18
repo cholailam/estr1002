@@ -35,11 +35,42 @@ int cal_score(int start, int end, char line[100005]){
 
 int find_pos(int start, char line[100005], int avg_score, int avg_pos){
 
-    int min_diff, current_diff;
-    min_diff = cal_score(start, avg_pos, line);
+    int min_diff, current_diff, best_pos, current_pos;
+    
+    min_diff = current_diff = cal_score(start, avg_pos, line) - avg_score;    
+    best_pos = current_pos = avg_pos;
 
-    while 
+
+    while ( abs(min_diff) >= abs(current_diff) ){
+
+        if ( abs(min_diff) > abs(current_diff) ){
+            best_pos = current_pos;
+            min_diff = current_diff;
+        }
+
+
+        // check the current_diff to determine which side can have better position
+        if (current_diff == 0)
+            return current_pos;
+        
+        else if (current_diff < 0) // = calculated score is smaller than avg_score
+            // can try try more letter
+            current_pos += 1;           
+
+        else 
+            current_pos -= 1;       
+        
+
+        current_diff = cal_score(start, current_pos, line) - avg_score;
+
+            
+    }
+
+    return best_pos;    
+
 }
+
+
 
 int main(){
 
@@ -63,6 +94,7 @@ int main(){
     avg_pos = (length + 1) / partition; 
 
     part_pos[0] = 0;
+    while 
 
     return 0;
 
